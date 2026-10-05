@@ -146,7 +146,15 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest tests/        # offl
   to another model, because a benchmark must not silently swap the model under test. A refusal is
   recorded and the turn is lost.
 
-## Notes
+## License
+
+Copyright (C) 2026 Nigel H-S
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License, version 3, as published by the Free Software Foundation. It is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See [LICENSE](LICENSE) for the
+full text.
 
 This project is not affiliated with the OpenTTD project. OpenTTD and OpenGFX are not included here:
 `scripts/setup.sh` downloads them from the official OpenTTD servers, and both are licensed under the

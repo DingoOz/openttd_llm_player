@@ -4,6 +4,12 @@ A repeatable harness for testing how well vision LLMs, local or cloud, play
 [OpenTTD](https://www.openttd.org). A model runs a transport company for a fixed stretch of
 game time and is scored on the net worth it ends with.
 
+![A turn from a filmed run: the model has joined two towns by road and built a bus stop in each](docs/turn.jpg)
+
+*A frame from a filmed run (`--video`). The model, qwen3.5:9b here, has built a road between two
+towns and a bus stop in each, and is now looking for a depot site. Its own commentary and tool
+call are at the bottom.*
+
 Every model gets the same three channels:
 
 | Channel | What it is | Used for |
@@ -13,6 +19,13 @@ Every model gets the same three channels:
 | **Text files** | A per-run workspace: `guide.md`, `notes.md`, `towns.txt`, `industries.txt`, `action_log.txt` | Reference manual and the model's persistent memory |
 
 Vision is mandatory. A run starts with a vision check and stops if the model cannot read an image.
+
+What the model is shown: the game view with tile coordinates drawn on it (things it owns are tagged
+in cyan), and a top-down map of the whole world.
+
+| `look(x, y, zoom)` | `view_map()` |
+|---|---|
+| ![Game view with a tile-coordinate overlay](docs/model-view.jpg) | ![Top-down map with a coordinate grid, towns and industries](docs/model-map.jpg) |
 
 ## Setup
 

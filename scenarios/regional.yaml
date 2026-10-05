@@ -1,0 +1,19 @@
+name: regional
+description: Two game years on a 128x128 map with hills and water. Road vehicles and aircraft.
+goal: |
+  Build the most valuable transport company you can in two years. The map is large: pick routes with
+  care, connect several town pairs or industries, and consider aircraft between distant large towns.
+transport: [road, air]
+game:
+  seed: 777
+  map_size: 128
+  start_year: 1995
+  towns: 2
+  industries: 4
+  terrain: 1
+  sea: 1
+episode:
+  max_steps: 120
+  days_per_step: 5
+  max_days: 730
+  max_tool_calls_per_step: 8

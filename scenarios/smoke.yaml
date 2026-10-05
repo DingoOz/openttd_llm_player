@@ -1,0 +1,13 @@
+name: smoke
+description: Two game months on a tiny map. Checks that a model can see, call tools and get a bus running.
+goal: |
+  Get a bus line running between two towns as quickly as you can, then add buses while it makes sense.
+transport: [road]
+game:
+  seed: 12345
+  map_size: 64
+  start_year: 1990
+episode:
+  max_steps: 20
+  days_per_step: 3
+  max_days: 60

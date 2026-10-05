@@ -1,0 +1,98 @@
+# Models the harness can run. Every model must accept image input: the run starts with a
+# vision check and refuses to continue if it fails.
+#
+#   provider: ollama     local models via Ollama's native API
+#             openai     any OpenAI-compatible endpoint (OpenAI, OpenRouter, Gemini, llama.cpp, LM Studio, vLLM)
+#             anthropic  Claude via the official SDK
+#             scripted   built-in non-LLM baseline
+#   tool_mode: native (function calling) or json (tools described in the prompt, for models without it)
+#   context_tokens: history budget; the conversation restarts from notes.md when it is reached
+#   api_key_env: name of the environment variable holding the key (never put keys in this file)
+
+models:
+  # ---- local -----------------------------------------------------------------------------
+  qwen3.5-9b:
+    provider: ollama
+    model: qwen3.5:9b
+    max_tokens: 1024
+    context_tokens: 24000        # must stay below options.num_ctx
+    image_max_side: 896
+    options: {num_ctx: 32768, think: false}
+
+  qwen3.5-9b-think:
+    provider: ollama
+    model: qwen3.5:9b
+    max_tokens: 4096
+    context_tokens: 24000
+    image_max_side: 896
+    options: {num_ctx: 32768, think: true}
+
+  # Same model pinned to the CPU, for when the GPUs are occupied by something else. Slow.
+  qwen3.5-9b-cpu:
+    provider: ollama
+    model: qwen3.5:9b
+    max_tokens: 1024
+    context_tokens: 24000
+    image_max_side: 768
+    options: {num_ctx: 32768, think: false, ollama: {num_gpu: 0}}
+
+  # llama.cpp / LM Studio / vLLM: start the server with a vision projector and point base_url at it.
+  local-openai-compatible:
+    provider: openai
+    model: local-model
+    base_url: http://localhost:8080/v1
+    context_tokens: 24000
+
+  # ---- Anthropic -------------------------------------------------------------------------
+  claude-opus-5-5:
+    provider: anthropic
+    model: claude-opus-5-5
+    max_tokens: 16000
+    context_tokens: 300000
+    image_max_side: 1024
+    options: {effort: medium}
+
+  claude-sonnet-5-5:
+    provider: anthropic
+    model: claude-sonnet-5-5
+    max_tokens: 16000
+    context_tokens: 300000
+    options: {effort: medium}
+
+  claude-haiku-4-5:
+    provider: anthropic
+    model: claude-haiku-4-5
+    max_tokens: 8000
+    context_tokens: 120000
+
+  # ---- other clouds (OpenAI-compatible) ---------------------------------------------------
+  # Fill in the model id you want to test; ids change often, so none is hard-coded here.
+  openai:
+    provider: openai
+    model: SET_MODEL_ID
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    max_tokens: 8000
+    context_tokens: 150000
+    options: {max_tokens_param: max_completion_tokens}
+
+  gemini:
+    provider: openai
+    model: SET_MODEL_ID
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    api_key_env: GEMINI_API_KEY
+    max_tokens: 8000
+    context_tokens: 150000
+
+  openrouter:
+    provider: openai
+    model: SET_MODEL_ID          # e.g. "vendor/model-name"
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+    max_tokens: 8000
+    context_tokens: 100000
+
+  # ---- reference -------------------------------------------------------------------------
+  scripted:
+    provider: scripted
+    model: scripted-baseline

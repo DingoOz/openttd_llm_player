@@ -1,0 +1,14 @@
+name: bus_starter
+description: One game year on a small, flat map with five towns. Road vehicles only.
+goal: |
+  Build the most valuable transport company you can in one year. Passenger buses between the larger
+  towns are the simplest way to start; trucks carrying industrial cargo can pay better.
+transport: [road]
+game:
+  seed: 12345
+  map_size: 64
+  start_year: 1990
+episode:
+  max_steps: 60
+  days_per_step: 4
+  max_days: 365
